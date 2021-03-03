@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sentiment.analytics.tool;
+package sentimentanalyticstool;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -16,6 +19,10 @@ public class SentimentAnalyticsTool {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        TextAnalysis input = new TextAnalysis("Checking to 2152see if it removes51*&^&^&( spaces and add££$$$s every word and char$%%$£acter to a ne)'.;[]1 w line");
+        System.out.println(input.toString());
+        
     }
     
 }
