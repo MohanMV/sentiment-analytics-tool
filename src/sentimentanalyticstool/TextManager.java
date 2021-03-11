@@ -17,24 +17,33 @@ import java.util.regex.Pattern;
  */
 public class TextManager {
     
-    List<String> list = new ArrayList<String>();
+    String text;
+    String[] wordsList;
             
     public TextManager(String input){
-        Pattern pattern = Pattern.compile("(\\w+)|(\\.{3})|[^\\s]");
-        Matcher matcher = pattern.matcher(input);
-        while (matcher.find()) {
-            list.add(matcher.group());
+        if(input == null || input.isEmpty()){
+            throw new IllegalArgumentException("No text was provided.");
         }
+        text = input;
     }
+    
+    private void sortText(){
+        //regex removes numbers and punctuation marks 
+        String result = text.replaceAll("[\\d+|\\p{P}\\p{S}]" ,"");
+        wordsList = result.toLowerCase().split(" ");//split words based on spaces and changes to lowercase for afinn library
+    }
+    
+    
+    
+
     
     @Override
     public String toString(){
+        sortText();
         String output = "";
-        for(int i=0;i<list.size();i++){
-            output += list.get(i) + "\n";
+        for(String word : wordsList){
+            output += word + "\n";
         }
-        
         return output;
-        
     }
 }

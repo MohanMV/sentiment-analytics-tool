@@ -20,7 +20,7 @@ public class UI {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        TextManager input = new TextManager("Checking to 2152see if it removes51*&^&^&( spaces and add££$$$s every word and char$%%$£acter to a ne)'.;[]1 w line");
+        TextManager input = new TextManager("Hi what do3333es Th%^%65at me44awefwefw__0928201n Sh3221it");
         System.out.println(input.toString());
         
     }
