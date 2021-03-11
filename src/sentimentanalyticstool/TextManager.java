@@ -31,12 +31,11 @@ public class TextManager {
         //regex removes numbers and punctuation marks 
         String result = text.replaceAll("[\\d+|\\p{P}\\p{S}]" ,"");
         wordsList = result.toLowerCase().split(" ");//split words based on spaces and changes to lowercase for afinn library
+        if(wordsList == null | wordsList.length == 0){
+            throw new IllegalArgumentException("Text is not descriptive enough");
+        }
     }
-    
-    
-    
 
-    
     @Override
     public String toString(){
         sortText();

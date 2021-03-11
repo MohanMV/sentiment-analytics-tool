@@ -20,7 +20,7 @@ public class UI {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        TextManager input = new TextManager("Hi what do3333es Th%^%65at me44awefwefw__0928201n Sh3221it");
+        TextManager input = new TextManager(" y£)O ___00000*7&%*^&$%*&^MA22222MA A BI108*&^5G a$$SS ^B1111iT5875765$*4)(*&()*67c&^^h 68897F9089u8c987&^^%k ");
         System.out.println(input.toString());
         
     }
