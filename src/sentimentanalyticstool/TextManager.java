@@ -15,11 +15,11 @@ import java.util.regex.Pattern;
  *
  * @author Mohankumaar MV student-id = 17048038;
  */
-public class TextAnalysis {
+public class TextManager {
     
     List<String> list = new ArrayList<String>();
             
-    public TextAnalysis(String input){
+    public TextManager(String input){
         Pattern pattern = Pattern.compile("(\\w+)|(\\.{3})|[^\\s]");
         Matcher matcher = pattern.matcher(input);
         while (matcher.find()) {
