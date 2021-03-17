@@ -6,12 +6,9 @@
 package sentimentanalyticstool;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,11 +21,11 @@ import java.util.logging.Logger;
  */
 public class TextManager {
     
-    String text;
-    String[] wordListWithStopWords;
-    ArrayList<String> wordList = new ArrayList<>();
-    List<String> stopWords = new ArrayList<>();
-    ArrayList<String> wordListWithoutStopWords = new ArrayList<>();
+    private String text;
+    private String[] wordListWithStopWords;
+    private ArrayList<String> wordList = new ArrayList<>();
+    private List<String> stopWords = new ArrayList<>();
+    private ArrayList<String> wordListWithoutStopWords = new ArrayList<>();
             
     public TextManager(String input) throws IOException{
         if(input == null || input.isEmpty()){
@@ -51,12 +48,12 @@ public class TextManager {
             throw new IllegalArgumentException("No proper text to analyse");// need to work more on this
         } else{
             wordList.addAll(Arrays.asList(wordListWithStopWords));
-            wordListWithoutStopWords.addAll(Arrays.asList(wordListWithStopWords));
         }
     }
        
     public void removeStopWords(){
-
+        
+        wordListWithoutStopWords.addAll(Arrays.asList(wordListWithStopWords));
         for(String word : wordList){
             for(String sWord : stopWords){
                 if(word.equals(sWord)){
@@ -64,21 +61,24 @@ public class TextManager {
                 }
             }
         }
+        if( wordListWithoutStopWords == null || wordListWithoutStopWords.isEmpty()){
+            throw new IllegalArgumentException("Text provided only had stop words.");
+        }
     }
     
-    public ArrayList<String> getWordList(){
+    public ArrayList<String> getCompletedWordList(){
         return wordListWithoutStopWords;
     }
     
-    public void loadStopWords() throws FileNotFoundException, IOException{
+    private void loadStopWords() throws FileNotFoundException, IOException{
         
-        BufferedReader buffreader = new BufferedReader(new FileReader("src/stopwords/scikitlearn.txt"));
+        BufferedReader reader = new BufferedReader(new FileReader("src/stopwords/scikitlearn.txt"));
         String sWord;
-        while ((sWord = buffreader.readLine()) != null) 
+        while ((sWord = reader.readLine()) != null) 
         {
             stopWords.add(sWord);
         }
-        buffreader.close();
+        reader.close();
     }
         
     

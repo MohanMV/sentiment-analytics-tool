@@ -21,12 +21,9 @@ public class UI {
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
         
-        TextManager input = new TextManager(" y£)O ___00000*7&%*^&$%*&^MA22222MA A BI108*&^5G a$$SS ^B1111iT5875765$*4)(*&()*67c&^^h 68897F9089u8c987&^^%k ");
-        input.sortText();
-        input.removeStopWords();
-        ArrayList<String> words = new ArrayList<>();
-        words = input.getWordList();
-        System.out.println(input.toString());
+        SentimentClassifier bruh = new SentimentClassifier("This movie was really good. The actor was fucking awful  though");
+        ArrayList<String> l = new ArrayList<>(bruh.getSortedInput());
+        System.out.println(bruh.analyze(l));
         /// Choose language:
         // Enter text
         // out sentiment 
