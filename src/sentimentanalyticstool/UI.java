@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  *
- * @author Mohan;
+ * @author Mohankumaar MV student-id = 17048038;
  */
 public class UI {
 
@@ -21,12 +21,12 @@ public class UI {
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
         
-        SentimentClassifier bruh = new SentimentClassifier("This movie was really good. The actor was fucking awful  though");
-        ArrayList<String> l = new ArrayList<>(bruh.getSortedInput());
-        System.out.println(bruh.analyze(l));
+        SentimentClassifier bruh = new SentimentClassifier("The world is in chaos. Life is beautiful but the sadness is depressing.");
+        
+        System.out.println(bruh.analyzeText("English"));
         /// Choose language:
         // Enter text
-        // out sentiment 
+        // print out sentiment 
  
         
     }

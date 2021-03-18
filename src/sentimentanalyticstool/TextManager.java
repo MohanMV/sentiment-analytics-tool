@@ -12,49 +12,64 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * sorts text into array, removes stop words
+ * This class is used to handled the String input given by the user. 
+ * It removes all numbers and punctuation marks. 
+ * Splits words into an string array based on whitespace and changes all letters to lowercase.
+ * Remove stop words based on external stop-words list.
+ * 
  * @author Mohankumaar MV student-id = 17048038;
  */
 public class TextManager {
     
-    private String text;
-    private String[] wordListWithStopWords;
-    private ArrayList<String> wordList = new ArrayList<>();
-    private List<String> stopWords = new ArrayList<>();
-    private ArrayList<String> wordListWithoutStopWords = new ArrayList<>();
+    private String text; //Holds user input 
+    private String[] wordList; // An arraythat holds the words from user input which contains stopwords. 
+    private ArrayList<String> wordListWithStopWords= new ArrayList<>(); // An array that holds words from the user input after removing punctuation marks and digits. 
+    private List<String> stopWords = new ArrayList<>(); //A list that holds stop-words.
+    private ArrayList<String> wordListWithoutStopWords = new ArrayList<>(); // An arraylist that holds the words from user input after removing stopwords  
             
+    /**
+     * Constructor for TextManager class
+     * @param input User input string
+     * @throws IOException if user input is null or empty
+     */
     public TextManager(String input) throws IOException{
         if(input == null || input.isEmpty()){
-            throw new IllegalArgumentException("No text was provided.");
+            throw new IllegalArgumentException("No text was provided.");// how can i change this if i need to throw error message in another language?
         }
         text = input;
-        try {
-            loadStopWords();
-        } catch (IOException ex) {
-           Logger.getLogger(TextManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        loadStopWords(); //Reads stop words into a List.
     }
     
+    /**
+     * Removes all digits and punctuation marks, splits words based on whitespace
+     * and changes all letters to lowercase. 
+     * Stores sorted list of words in an array.  
+     * @throws IllegalArgumentException if array list is empty or null after making changes. 
+     */
     public void sortText(){
-        //regex removes numbers and punctuation marks 
+        //uses regex to replace all digits "d+", punctuations "P" and non-whitespace characters (Symbols) "S" with an empty string
+        //split the input based on whitespaces and changes all letters to lowercase
+        //throws error if arraylist is empty after sorting. 
         String result = text.replaceAll("[\\d+|\\p{P}\\p{S}]" ,"");
-        wordListWithStopWords = result.toLowerCase().split(" ");//split words based on spaces and changes to lowercase for afinn library
-
-        if(wordListWithStopWords == null | wordListWithStopWords.length == 0){
-            throw new IllegalArgumentException("No proper text to analyse");// need to work more on this
-        } else{
-            wordList.addAll(Arrays.asList(wordListWithStopWords));
+        wordList = result.toLowerCase().split(" ");
+        wordListWithStopWords.addAll(Arrays.asList(wordList));
+        wordListWithoutStopWords.addAll(Arrays.asList(wordList));
+                
+        if(wordListWithStopWords == null | wordListWithStopWords.isEmpty()){
+            throw new IllegalArgumentException("No proper text to analyse");// how can i change this if i need to throw an error message in another language?
         }
+        
     }
        
+    /**
+     * Removes all stop words from the user input to be analysed later. 
+     * @throws IllegalArgumentException if array list is null or empty after removing stop words.
+     */
     public void removeStopWords(){
         
-        wordListWithoutStopWords.addAll(Arrays.asList(wordListWithStopWords));
-        for(String word : wordList){
+        for(String word : wordListWithStopWords){
             for(String sWord : stopWords){
                 if(word.equals(sWord)){
                     wordListWithoutStopWords.remove(sWord);
@@ -66,10 +81,17 @@ public class TextManager {
         }
     }
     
+    /**
+     * Getter method for accessing the sorted word list
+     * @return array list of words from user input without any stop words, punctuation marks, symbol, digits and white-spaces. 
+     */
     public ArrayList<String> getCompletedWordList(){
         return wordListWithoutStopWords;
     }
     
+    /**
+     * Read the stop-words text file into an array list.
+     */
     private void loadStopWords() throws FileNotFoundException, IOException{
         
         BufferedReader reader = new BufferedReader(new FileReader("src/stopwords/scikitlearn.txt"));
@@ -83,13 +105,13 @@ public class TextManager {
         
     
     
-    @Override
-    public String toString(){
-        
-        String output = "";
-        for(String word : wordListWithoutStopWords){
-            output += word + "\n";
-        }
-        return output;
-    }
+//    @Override
+//    public String toString(){
+//        
+//        String output = "";
+//        for(String word : wordListWithoutStopWords){
+//            output += word + "\n";
+//        }
+//        return output;
+//    }
 }
