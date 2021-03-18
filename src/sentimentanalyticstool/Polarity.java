@@ -12,7 +12,16 @@ import java.io.Serializable;
  * @author Mohankumaar MV student-id = 17048038;
  */
 public enum Polarity implements Serializable {
-    POSITIVE, NEGATIVE;
+
+    /**
+     *
+     */
+    POSITIVE,
+
+    /**
+     *
+     */
+    NEGATIVE;
     
 }
     
