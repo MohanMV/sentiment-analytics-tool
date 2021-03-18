@@ -21,27 +21,53 @@ import java.util.List;
  * 
  * @author Mohankumaar MV student-id = 17048038;
  */
-public class TextManager {
+public class TextManagerEnglish {
     
     private String text; //Holds user input 
-    private String[] wordList; // An arraythat holds the words from user input which contains stopwords. 
+    private String[] wordList; // An array that holds the words from user input which contains stopwords. 
     private ArrayList<String> wordListWithStopWords= new ArrayList<>(); // An array that holds words from the user input after removing punctuation marks and digits. 
     private List<String> stopWords = new ArrayList<>(); //A list that holds stop-words.
-    private ArrayList<String> wordListWithoutStopWords = new ArrayList<>(); // An arraylist that holds the words from user input after removing stopwords  
+    private ArrayList<String> wordListWithoutStopWords = new ArrayList<>(); // An arraylist that holds the words from user input after removing stopwords 
             
     /**
      * Constructor for TextManager class
      * @param input User input string
      * @throws IOException if user input is null or empty
      */
-    public TextManager(String input) throws IOException{
+    public TextManagerEnglish(String input) throws IOException{
+        
         if(input == null || input.isEmpty()){
             throw new IllegalArgumentException("No text was provided.");// how can i change this if i need to throw error message in another language?
         }
+        
         text = input;
         loadStopWords(); //Reads stop words into a List.
     }
     
+    /**
+     * Getter method for accessing the sorted word list
+     * @return array list of words from user input without any stop words, punctuation marks, symbol, digits and white-spaces. 
+     */
+    public ArrayList<String> getCompletedWordList(){
+        return wordListWithoutStopWords;
+    }
+    
+    /**
+     * Getter method for accessing text.
+     * @return String of input text
+     */
+    public String getInput(){
+        return text;
+    }
+    
+    /**
+     * Getter method for accessing stop words list.
+     * @return String of input text
+     */
+    public List<String> getStopWordList(){
+        return stopWords;
+    }
+  
     /**
      * Removes all digits and punctuation marks, splits words based on whitespace
      * and changes all letters to lowercase. 
@@ -62,7 +88,7 @@ public class TextManager {
         }
         
     }
-       
+         
     /**
      * Removes all stop words from the user input to be analysed later. 
      * @throws IllegalArgumentException if array list is null or empty after removing stop words.
@@ -82,19 +108,11 @@ public class TextManager {
     }
     
     /**
-     * Getter method for accessing the sorted word list
-     * @return array list of words from user input without any stop words, punctuation marks, symbol, digits and white-spaces. 
-     */
-    public ArrayList<String> getCompletedWordList(){
-        return wordListWithoutStopWords;
-    }
-    
-    /**
      * Read the stop-words text file into an array list.
      */
     private void loadStopWords() throws FileNotFoundException, IOException{
         
-        BufferedReader reader = new BufferedReader(new FileReader("src/stopwords/scikitlearn.txt"));
+        BufferedReader reader = new BufferedReader(new FileReader("src/stopwords/English.txt"));
         String sWord;
         while ((sWord = reader.readLine()) != null) 
         {
