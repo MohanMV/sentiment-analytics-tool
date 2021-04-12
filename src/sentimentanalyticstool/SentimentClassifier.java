@@ -6,6 +6,7 @@
 package sentimentanalyticstool;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,11 +22,13 @@ import java.util.LinkedHashMap;
  */
 public class SentimentClassifier {
     
-    private LinkedHashMap<String,Integer> afinnLibrary = new LinkedHashMap<>(); // a Hash Map used to hold words and its associated score
+    private LinkedHashMap<String,Integer> afinnLibrary = new LinkedHashMap<String, Integer>(); // a Hash Map used to hold words and its associated score
     private TextManagerEnglish input; // TextManagerEnglish object used to hold the user input
     private String language;
     private Polarity state; // the Polarity/state of the input
     private ArrayList<String> wordList = new ArrayList<>();
+    private LibraryManager myLibrary = new LibraryManager();
+    private LinkedHashMap<String,Integer> mohanLibrary = new LinkedHashMap<String,Integer>();
     
     /**
      * The constructor 
@@ -43,6 +46,7 @@ public class SentimentClassifier {
             this.input = new French(input);
             loadFrfinnLibrary();
         }
+        mohanLibrary = myLibrary.Library();
         
          // Initializes textManager object with user input
          //Reads the Afinn Libarary text file into a HashMap
@@ -101,7 +105,7 @@ public class SentimentClassifier {
     private void loadFrfinnLibrary() throws FileNotFoundException, IOException{
         
         BufferedReader reader = new BufferedReader(new FileReader("src/languages/AFINN-fr-165.txt"));
-        String line ;
+        String line;
        
         while ((line = reader.readLine()) != null) 
         {
@@ -129,6 +133,8 @@ public class SentimentClassifier {
         }   
     }
     
+    
+    
     /**
      *
      */
@@ -147,6 +153,16 @@ public class SentimentClassifier {
         {
             String k = key;
             System.out.println(key+"\n");
+        }
+    }
+    
+    public void printMyLibrary(){
+        String ss = "";
+        for (String key : mohanLibrary.keySet())
+        {
+            String k = key;
+            String value = mohanLibrary.get(key).toString();
+            System.out.println(key+" "+value + "\n" + mohanLibrary.size() + "\n");
         }
     }
         

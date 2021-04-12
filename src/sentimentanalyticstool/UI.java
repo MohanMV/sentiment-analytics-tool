@@ -24,6 +24,7 @@ public class UI {
         
        LanguageManager Language;
        SentimentClassifier classifier;
+       LibraryInitializer lib = new LibraryInitializer();
        BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in));
         
        System.out.println("Choose English or French/Choisissez l'anglais ou le français: ");
@@ -37,12 +38,12 @@ public class UI {
        
        classifier = new SentimentClassifier(text, language);
        String pol = classifier.analyzeText(language);
-       
+       classifier.printMyLibrary();
        System.out.println(Language.getPolarityMessage(pol) + "\n");
      
-       classifier.printStopWords();
-       classifier.printLibrary();
-       classifier.printWordList();
+//       classifier.printStopWords();
+//       classifier.printLibrary();
+//       classifier.printWordList();
        
         
         // Choose language:
