@@ -10,28 +10,37 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
  * @author Mohankumaar MV student-id = 17048038;
  */
-public class LibraryInitializer {
+public class MyLibrary {
     
-    private String[] negWordList;
-    private String[] posWordList;
-
+    private ArrayList<String> posWords = new ArrayList<>();
+    private ArrayList<String> negWords = new ArrayList<>();
     
-    public LibraryInitializer() throws IOException{
-
-        
+    public MyLibrary() throws IOException{
+        loadNeg();
+        loadPos();
     }
     
-    public String[] loadNeg() throws FileNotFoundException, IOException {
+    public ArrayList<String> getNegWordlist(){
+        return negWords;
+    }
     
-        String target_dir = "src/training_data/mix20_rand700_tokens_cleaned/tokens/neg";
+    public ArrayList<String> getPosWordlist(){
+        return posWords;
+    }
+    
+    private void loadNeg() throws FileNotFoundException, IOException {
+    
+        String target_dir = "src/training_data/neg";
         File dir = new File(target_dir);
         File[] files = dir.listFiles();
-
+        String[] negWordList = null;
 
         for (File f : files) {
             if(f.isFile()) {
@@ -40,11 +49,13 @@ public class LibraryInitializer {
                 try {
                     inputStream = new BufferedReader(new FileReader(f));
                     String line;
+                    
 
                     while ((line = inputStream.readLine()) != null) {
                          String result = line.replaceAll("[\\d+|\\p{P}\\p{S}]" ,"");
                          negWordList = result.toLowerCase().split(" ");
-                        
+
+                         
                     }
                 }
                 finally {
@@ -53,16 +64,16 @@ public class LibraryInitializer {
                     }
                 }
             }
-
+            negWords.addAll(Arrays.asList(negWordList));
         }
-        return negWordList;
     }
     
-    public String[] loadPos() throws FileNotFoundException, IOException{
+    private void loadPos() throws FileNotFoundException, IOException{
         
-        String target_dir = "src/training_data/mix20_rand700_tokens_cleaned/tokens/pos";
+        String target_dir = "src/training_data/pos";
         File dir = new File(target_dir);
         File[] files = dir.listFiles();
+        String[] posWordList = null;
         
         for (File f: files){
             if(f.isFile()){
@@ -74,8 +85,7 @@ public class LibraryInitializer {
 
                     while ((line = inputStream.readLine()) != null) {
                         String result = line.replaceAll("[\\d+|\\p{P}\\p{S}]" ,"");
-                        posWordList = result.toLowerCase().split(" ");
-                        
+                        posWordList = result.toLowerCase().split(" ");   
                     }
                 }
                 finally {
@@ -83,11 +93,9 @@ public class LibraryInitializer {
                         inputStream.close();
                     }
                 }
-            }         
+            }
+            posWords.addAll(Arrays.asList(posWordList));
         }
-        return posWordList;
     }
-    
-
     
 }

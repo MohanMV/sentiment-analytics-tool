@@ -39,36 +39,36 @@ public class TextManagerTest {
     }
 
     /**
-     * Test of sortText method, of class TextManagerEnglish.
+     * Test of sortText method, of class TextManager.
      */
     @Test
     public void testSortText() {
         System.out.println("sortText");
-        TextManagerEnglish instance = null;
+        TextManager instance = null;
         instance.sortText();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of removeStopWords method, of class TextManagerEnglish.
+     * Test of removeStopWords method, of class TextManager.
      */
     @Test
     public void testRemoveStopWords() {
         System.out.println("removeStopWords");
-        TextManagerEnglish instance = null;
+        TextManager instance = null;
         instance.removeStopWords();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getCompletedWordList method, of class TextManagerEnglish.
+     * Test of getCompletedWordList method, of class TextManager.
      */
     @Test
     public void testGetCompletedWordList() {
         System.out.println("getCompletedWordList");
-        TextManagerEnglish instance = null;
+        TextManager instance = null;
         ArrayList<String> expResult = null;
         ArrayList<String> result = instance.getCompletedWordList();
         assertEquals(expResult, result);

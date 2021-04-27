@@ -6,7 +6,6 @@
 package sentimentanalyticstool;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,20 +14,18 @@ import java.util.LinkedHashMap;
 
 /**
  * This class is used to Classify the user input.
- * It sorts the user input using methods from the TextManagerEnglish class.
- * Analyses the text based on the Afinn Library
+ * It sorts the user input using methods from the TextManager class.
+ Analyses the text based on the Afinn Library
  * 
  * @author Mohankumaar MV student-id = 17048038;
  */
 public class SentimentClassifier {
     
     private LinkedHashMap<String,Integer> afinnLibrary = new LinkedHashMap<String, Integer>(); // a Hash Map used to hold words and its associated score
-    private TextManagerEnglish input; // TextManagerEnglish object used to hold the user input
+    private TextManager input; // TextManager object used to hold the user input
     private String language;
     private Polarity state; // the Polarity/state of the input
     private ArrayList<String> wordList = new ArrayList<>();
-    private LibraryManager myLibrary = new LibraryManager();
-    private LinkedHashMap<String,Integer> mohanLibrary = new LinkedHashMap<String,Integer>();
     
     /**
      * The constructor 
@@ -37,16 +34,17 @@ public class SentimentClassifier {
      * @throws FileNotFoundException if AfinnLibrary text file not found
      * @throws IOException if user input is corrupted
      */
-    public SentimentClassifier(String input, String language) throws FileNotFoundException, IOException{
+    public SentimentClassifier(String input, String language) throws FileNotFoundException, IOException {
         
-        if(language.equals("english")|| language.equals("anglaise")){
-            this.input = new TextManagerEnglish(input);
+        this.input = new TextManager(input, language);
+        if(language.equals("1")){
+            
             loadEnAfinnLibrary();
-        } else if(language.equals("french")|| language.equals("français")){
-            this.input = new French(input);
-            loadFrfinnLibrary();
+        } else if(language.equals("2")){
+
+            loadFrfinnLibrary(); 
         }
-        mohanLibrary = myLibrary.Library();
+       
         
          // Initializes textManager object with user input
          //Reads the Afinn Libarary text file into a HashMap
@@ -156,28 +154,19 @@ public class SentimentClassifier {
         }
     }
     
-    public void printMyLibrary(){
-        String ss = "";
-        for (String key : mohanLibrary.keySet())
-        {
-            String k = key;
-            String value = mohanLibrary.get(key).toString();
-            System.out.println(key+" "+value + "\n" + mohanLibrary.size() + "\n");
-        }
-    }
+
         
     /**
      *
      */
     public void printFullLibrary(){
-        String ss = "";
-        int i = 1;
+
         for (String key : afinnLibrary.keySet())
         {
             String k = key;
             String value = afinnLibrary.get(key).toString();
-            System.out.println(key+" "+value + "\n" + afinnLibrary.size() + "\n"+i);
-            i++;
+            System.out.println(key+" "+value + "\n" + afinnLibrary.size() + "\n");
+
         }
         
     }

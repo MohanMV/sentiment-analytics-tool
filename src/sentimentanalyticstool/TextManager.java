@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * This class is used to handled the String input given by the user. 
@@ -21,10 +22,11 @@ import java.util.List;
  * 
  * @author Mohankumaar MV student-id = 17048038;
  */
-public class TextManagerEnglish {
+public class TextManager {
     
     private String text; //Holds user input 
-    private String[] wordList; // An array that holds the words from user input which contains stopwords. 
+    private String[] wordList; // An array that holds the words from user input which contains stopwords.
+    private String language;
     private ArrayList<String> wordListWithStopWords= new ArrayList<>(); // An array that holds words from the user input after removing punctuation marks and digits. 
     private List<String> stopWords = new ArrayList<>(); //A list that holds stop-words.
     private ArrayList<String> wordListWithoutStopWords = new ArrayList<>(); // An arraylist that holds the words from user input after removing stopwords 
@@ -34,14 +36,22 @@ public class TextManagerEnglish {
      * @param input User input string
      * @throws IOException if user input is null or empty
      */
-    public TextManagerEnglish(String input) throws IOException{
+    public TextManager(String input, String language) throws IOException{
         
         if(input == null || input.isEmpty()){
             throw new IllegalArgumentException("No text was provided.");// how can i change this if i need to throw error message in another language?
         }
-        
         text = input;
-        loadStopWords(); //Reads stop words into a List.
+        this.language = language;
+        if(this.language.equals("1")){
+            loadEngStopWords(); //Reads stop words into a List.
+        }
+        else if(this.language.equals("2")){
+            loadFrStopWords();
+        }
+        
+        
+        
     }
     
     /**
@@ -79,7 +89,12 @@ public class TextManagerEnglish {
         //split the input based on whitespaces and changes all letters to lowercase
         //throws error if arraylist is empty after sorting. 
         String result = text.replaceAll("[\\d+|\\p{P}\\p{S}]" ,"");
-        wordList = result.toLowerCase().split(" ");
+        if(this.language.equals("1")){
+            wordList = result.toLowerCase().split(" ");
+        }
+        else if(this.language.equals("2")){
+            wordList = result.toLowerCase(new Locale("fr", "FR")).split(" ");
+        }
         wordListWithStopWords.addAll(Arrays.asList(wordList));
         wordListWithoutStopWords.addAll(Arrays.asList(wordList));
                 
@@ -110,9 +125,20 @@ public class TextManagerEnglish {
     /**
      * Read the stop-words text file into an array list.
      */
-    private void loadStopWords() throws FileNotFoundException, IOException{
+    private void loadEngStopWords() throws FileNotFoundException, IOException{
         
         BufferedReader reader = new BufferedReader(new FileReader("src/stopwords/English.txt"));
+        String sWord;
+        while ((sWord = reader.readLine()) != null) 
+        {
+            stopWords.add(sWord);
+        }
+        reader.close();
+    }
+    
+    private void loadFrStopWords() throws FileNotFoundException, IOException{
+        
+        BufferedReader reader = new BufferedReader(new FileReader("src/stopwords/French.txt"));
         String sWord;
         while ((sWord = reader.readLine()) != null) 
         {

@@ -10,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -18,80 +17,78 @@ import java.util.List;
  *
  * @author Mohankumaar MV student-id = 17048038;
  */
-public class LibraryManager {
+public class MyLibraryManager {
     
-    private LibraryInitializer Lib;
-    private List<String> stopWords = new ArrayList<String>(); //A list that holds stop-words.
-    private List<String> afinnLibrary = new ArrayList<String>();
-    private LinkedHashMap<String,Integer> myLibrary = new LinkedHashMap<String,Integer>();
-    private ArrayList<String> posKeyWords = new ArrayList<String>();
-    private ArrayList<String> negKeyWords = new ArrayList<String>();
-    private int posOccurences; 
-    private int negOccurences;
+    private MyLibrary Lib;
+    private List<String> stopWordList = new ArrayList<>(); //A list that holds stop-words.
+    private List<String> afinnLibrary = new ArrayList<>();
+    private LinkedHashMap<String,Integer> myLibrary = new LinkedHashMap<>();
+    private ArrayList<String> posKeyWords = new ArrayList<>();
+    private ArrayList<String> negKeyWords = new ArrayList<>();
+    private float posOccurrences; 
+    private float negOccurrences;
     
-    public LibraryManager() throws IOException{
-        Lib = new LibraryInitializer();
+    public MyLibraryManager() throws IOException{
+        
+        Lib = new MyLibrary();
+        posKeyWords = removeStopWords(Lib.getPosWordlist());
+        negKeyWords = removeStopWords(Lib.getNegWordlist());
         
         loadStopWords();
         loadEnAfinnLibrary();
-        posKeyWords = removeStopWords(Lib.loadPos());
-        negKeyWords = removeStopWords(Lib.loadNeg());
-       
     }
     
-    public LinkedHashMap<String,Integer> Library() throws IOException{
+    public LinkedHashMap<String,Integer> getLibrary() throws IOException{
         
-
         int polarityInt;
-        System.out.println(posKeyWords.size());
-        System.out.println(negKeyWords.size());
+        
+        Outer:
         for(String word : afinnLibrary){
-            posOccurences = 0;
-            negOccurences = 0;
+            posOccurrences = 0;
+            negOccurrences = 0;
             polarityInt = 0;
             
             for(String pWord : posKeyWords){
                 if(!pWord.isEmpty()){
                     if(word.equals(pWord)){
-                        posOccurences++; 
+                        posOccurrences++; 
                     }
                 }
             }
+            
             for(String nWord: negKeyWords){
                 if(!nWord.isEmpty()){
                     if(word.equals(nWord)){
-                        negOccurences++;
+                        negOccurrences++;
                     }
                 }
             }
-            System.out.println(word + posOccurences);
-            System.out.println(word + negOccurences);
             
-            if((posOccurences + negOccurences) == 0){
-                polarityInt = 0;
-            } else{
-                polarityInt = ((posOccurences - negOccurences)/(posOccurences + negOccurences)) * 5;
-                myLibrary.put(word,polarityInt);
+            if(posOccurrences == 0 && negOccurrences == 0){
+                continue Outer;
             }
-            
-            
+           
+            polarityInt = (int)Math.round(((posOccurrences-negOccurrences)/(posOccurrences+negOccurrences))*5.0);
+            myLibrary.put(word,polarityInt);  
         }
-
         return myLibrary;
     }
     
-    private ArrayList removeStopWords(String[] wordListWithStopWords){
+    private ArrayList removeStopWords(ArrayList<String> wordListWithSWords){
         
-        ArrayList<String> wordList = new ArrayList<String>(); 
-        wordList.addAll(Arrays.asList(wordListWithStopWords));
+        ArrayList<String> stopWords = new ArrayList<>();
+        ArrayList<String> wordList = wordListWithSWords;         
         
-        for(String word : wordListWithStopWords){
-            for(String sWord : stopWords){
+        for(String word : wordList){
+            for(String sWord : stopWordList){
                 if(word.equals(sWord)){
-                    wordList.remove(sWord);
+                    stopWords.add(sWord);
                 }
             }
         }
+        
+        wordList.removeAll(stopWords);
+        
         if( wordList.isEmpty()){
             throw new IllegalArgumentException("Text provided only had stop words.");
         }   
@@ -105,13 +102,13 @@ public class LibraryManager {
         String sWord;
         while ((sWord = reader.readLine()) != null) 
         {
-            stopWords.add(sWord);
+            stopWordList.add(sWord);
         }
         reader.close();
     }
     
     /**
-     * Read the Afinn Library English text file into a HashMap.
+     * Read the Afinn English text file into a HashMap.
     */
     private void loadEnAfinnLibrary() throws FileNotFoundException, IOException{
         
@@ -129,5 +126,4 @@ public class LibraryManager {
         }
         reader.close();
     }
-    
 }
