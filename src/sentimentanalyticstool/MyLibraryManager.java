@@ -112,7 +112,7 @@ public class MyLibraryManager {
     */
     private void loadEnAfinnLibrary() throws FileNotFoundException, IOException{
         
-        BufferedReader reader = new BufferedReader(new FileReader("src/languages/AFINN-en-165.txt"));
+        BufferedReader reader = new BufferedReader(new FileReader("src/language_libraries/AFINN-en-165.txt"));
         String line ;
        
         while ((line = reader.readLine()) != null) 

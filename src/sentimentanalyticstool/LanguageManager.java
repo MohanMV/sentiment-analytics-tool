@@ -99,8 +99,10 @@ public class LanguageManager {
             return println(strings.getString("positive_message"),ANSI_GREEN, ANSI_RESET);
         }else if(polarity.equals("NEGATIVE")){
             return println(strings.getString("negative_message"),ANSI_RED, ANSI_RESET);
+        }else{
+            return strings.getString("no_sentiment_message");
         }
-        return "";
+        
     }
     
     public String println(String message, Object...params){

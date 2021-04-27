@@ -99,8 +99,20 @@ public class TextManager {
         else if(this.language.equals("2")){
             wordList = result.toLowerCase(new Locale("fr", "FR")).split(" ");
         }
-        wordListWithStopWords.addAll(Arrays.asList(wordList));
-        wordListWithoutStopWords.addAll(Arrays.asList(wordList));
+
+        for(String word: wordList){
+            if(!word.isEmpty()){
+                wordListWithStopWords.add(word);
+            }
+        }
+        
+        wordListWithoutStopWords = new ArrayList<>(wordListWithStopWords);
+        
+        //loop through each element in arraylist
+        //if element is not empty
+        //move it to new arraylist
+        //concurrent modification
+        //replace original list with the current list
                 
         if(wordListWithStopWords == null | wordListWithStopWords.isEmpty()){
             throw new IllegalArgumentException("No proper text to analyse");// how can i change this if i need to throw an error message in another language?

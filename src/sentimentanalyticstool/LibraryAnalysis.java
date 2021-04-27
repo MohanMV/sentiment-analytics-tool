@@ -113,7 +113,7 @@ public class LibraryAnalysis {
     
     private void loadEnAfinnLibrary() throws FileNotFoundException, IOException{
         
-        BufferedReader reader = new BufferedReader(new FileReader("src/languages/AFINN-en-165.txt"));
+        BufferedReader reader = new BufferedReader(new FileReader("src/language_libraries/AFINN-en-165.txt"));
         String line ;
        
         while ((line = reader.readLine()) != null) 
@@ -131,7 +131,7 @@ public class LibraryAnalysis {
     
     private void loadFrAfinnLibrary() throws FileNotFoundException, IOException{
         
-        BufferedReader reader = new BufferedReader(new FileReader("src/languages/AFINN-fr-165.txt"));
+        BufferedReader reader = new BufferedReader(new FileReader("src/language_libraries/AFINN-fr-165.txt"));
         String line;
        
         while ((line = reader.readLine()) != null) 
@@ -159,13 +159,12 @@ public class LibraryAnalysis {
         reader.close();
     }
     
-    private int[] getTotalScore_Negative() throws FileNotFoundException, IOException {
+    public int[] getTotalScore_Negative() throws FileNotFoundException, IOException {
     
         String target_dir = "src/testing_data/neg";
         File dir = new File(target_dir);
         File[] files = dir.listFiles();
         String[] negWordList = null;
-        ArrayList<String> negWords = new ArrayList<>();
         ArrayList<String> stopWords = new ArrayList<>();
         int totalReviewScoreAfinn = 0;
         int totalReviewScoreMohan = 0;
@@ -185,9 +184,8 @@ public class LibraryAnalysis {
 
                         String result = line.replaceAll("[\\d+|\\p{P}\\p{S}]" ,"");
                         negWordList = result.toLowerCase().split(" ");
-                        negWords.addAll(Arrays.asList(negWordList));
-            
-                        ArrayList<String> wordList = negWords;         
+
+                        ArrayList<String> wordList = new ArrayList<>(Arrays.asList(negWordList)); 
 
                         for(String word : wordList){
                             for(String sWord : stopWordList){
@@ -239,13 +237,12 @@ public class LibraryAnalysis {
         return totalScoreNegative;
     }
     
-    private int[] getTotalScore_Positive() throws FileNotFoundException, IOException {
+    public int[] getTotalScore_Positive() throws FileNotFoundException, IOException {
     
         String target_dir = "src/testing_data/pos";
         File dir = new File(target_dir);
         File[] files = dir.listFiles();
-        String[] negWordList = null;
-        ArrayList<String> negWords = new ArrayList<>();
+        String[] posWordList = null;
         ArrayList<String> stopWords = new ArrayList<>();
         int totalReviewScoreAfinn = 0;
         int totalReviewScoreMohan = 0;
@@ -264,10 +261,9 @@ public class LibraryAnalysis {
                         int reviewScore = 0;
 
                         String result = line.replaceAll("[\\d+|\\p{P}\\p{S}]" ,"");
-                        negWordList = result.toLowerCase().split(" ");
-                        negWords.addAll(Arrays.asList(negWordList));
-            
-                        ArrayList<String> wordList = negWords;         
+                        posWordList = result.toLowerCase().split(" ");
+                        
+                        ArrayList<String> wordList = new ArrayList<>(Arrays.asList(posWordList));         
 
                         for(String word : wordList){
                             for(String sWord : stopWordList){
@@ -277,18 +273,18 @@ public class LibraryAnalysis {
                             }
                         }
                         
-                        wordList.removeAll(stopWords);
-                       
+                        wordList.removeAll(stopWords);         
+                        
                         for(String word: wordList){
-                            for (String key : afinnEnglishLibrary.keySet())
+                            for(String key : afinnEnglishLibrary.keySet())
                             {
-                                if(word.equals(key)){
+                                if(word.equals(key)){ 
                                     reviewScore += afinnEnglishLibrary.get(key);
                                 }
                             }
                         }
 
-                        if(reviewScore>0){
+                        if(reviewScore>0){ 
                             totalReviewScoreAfinn++;
                         }
                         
@@ -317,8 +313,5 @@ public class LibraryAnalysis {
         totalScorePositive[0] = totalReviewScoreAfinn;
         totalScorePositive[1] = totalReviewScoreMohan;
         return totalScorePositive;
-    }
-    
-
-    
+    } 
 }

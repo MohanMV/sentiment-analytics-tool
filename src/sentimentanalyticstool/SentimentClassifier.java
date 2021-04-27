@@ -75,8 +75,14 @@ public class SentimentClassifier {
         
         if(score>0){ //if score is more than 0 return name of this enum: Positive
             return Polarity.POSITIVE.name();
-        } // if not more than 0 return Negative
-        return Polarity.NEGATIVE.name();
+        } 
+        else if(score<0){// if not more than 0 return Negative
+            
+            return Polarity.NEGATIVE.name();
+        }else{
+            return "0";
+        }
+
     }  
     
     /**
@@ -84,7 +90,7 @@ public class SentimentClassifier {
      */
     private void loadEnAfinnLibrary() throws FileNotFoundException, IOException{
         
-        BufferedReader reader = new BufferedReader(new FileReader("src/languages/AFINN-en-165.txt"));
+        BufferedReader reader = new BufferedReader(new FileReader("src/language_libraries/AFINN-en-165.txt"));
         String line ;
        
         while ((line = reader.readLine()) != null) 
@@ -102,7 +108,7 @@ public class SentimentClassifier {
     
     private void loadFrfinnLibrary() throws FileNotFoundException, IOException{
         
-        BufferedReader reader = new BufferedReader(new FileReader("src/languages/AFINN-fr-165.txt"));
+        BufferedReader reader = new BufferedReader(new FileReader("src/language_libraries/AFINN-fr-165.txt"));
         String line;
        
         while ((line = reader.readLine()) != null) 
