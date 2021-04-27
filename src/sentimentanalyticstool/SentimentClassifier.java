@@ -56,7 +56,7 @@ public class SentimentClassifier {
      * @param language The language that the text is in 
      * @return the polarity of the text given 
      */
-    public String analyzeText(String language){
+    public String analyzeText(){
        
         input.sortText();
         input.removeStopWords();

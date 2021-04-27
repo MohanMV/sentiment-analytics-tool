@@ -5,6 +5,7 @@
  */
 package sentimentanalyticstool;
 
+import java.io.IOException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -41,15 +42,46 @@ public class SentimentClassifierTest {
      * Test of analyzeText method, of class SentimentClassifier.
      */
     @Test
-    public void testAnalyzeText() {
-        System.out.println("analyzeText");
-        String language = "";
-        SentimentClassifier instance = null;
-        String expResult = "";
-        String result = instance.analyzeText(language);
+    public void testPositiveEnglishInput() throws IOException {
+        
+        String text = "beautiful happy outstanding fraudulent";
+        String language = "1";
+        SentimentClassifier instance = new SentimentClassifier(text,language);
+        String expResult = "POSITIVE";
+        String result = instance.analyzeText();
+        assertEquals(expResult, result);        
+    }
+    
+    @Test
+    public void testNegativeEnglishInput() throws IOException {
+        
+        String text = "sad pain die funnier";
+        String language = "1";
+        SentimentClassifier instance = new SentimentClassifier(text,language);
+        String expResult = "NEGATIVE";
+        String result = instance.analyzeText();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+    @Test
+    public void testPositiveFrenchInput() throws IOException {
+        
+        String text = "sensibles exceptionnel opprimés déconnecté";
+        String language = "2";
+        SentimentClassifier instance = new SentimentClassifier(text,language);
+        String expResult = "POSITIVE";
+        String result = instance.analyzeText();
+        assertEquals(expResult, result);        
+    }
+    
+    @Test
+    public void testNegativeFrenchInput() throws IOException {
+    
+        String text = "inquiet vulnérabilité filsdepute apaisée";
+        String language = "2";
+        SentimentClassifier instance = new SentimentClassifier(text,language);
+        String expResult = "NEGATIVE";
+        String result = instance.analyzeText();
+        assertEquals(expResult, result);
     }
     
 }

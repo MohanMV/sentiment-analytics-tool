@@ -5,6 +5,7 @@
  */
 package sentimentanalyticstool;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -38,42 +39,121 @@ public class TextManagerTest {
     public void tearDown() {
     }
 
+
+
     /**
-     * Test of sortText method, of class TextManager.
+     * Test of removeStopWords method, of class TextManager.
      */
     @Test
-    public void testSortText() {
-        System.out.println("sortText");
-        TextManager instance = null;
+    public void testRemovalOfEnglishStopWords() throws IOException {
+        
+        ArrayList<String> expResult = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
+        String input="The weather today is so lovely and fine a boy was doing nothing and i feel sad";
+        String language="1";
+        
+        TextManager instance = new TextManager(input,language);       
         instance.sortText();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.removeStopWords();
+        
+        expResult.add("weather");
+        expResult.add("today");
+        expResult.add("lovely");
+        expResult.add("fine");
+        expResult.add("boy");
+        expResult.add("doing");
+        expResult.add("feel");
+        expResult.add("sad");
+        
+        result = instance.getCompletedWordList();
+        assertEquals(expResult,result);   
     }
 
     /**
      * Test of removeStopWords method, of class TextManager.
      */
     @Test
-    public void testRemoveStopWords() {
-        System.out.println("removeStopWords");
-        TextManager instance = null;
+    public void testRemovalOfFrenchStopWords() throws IOException {
+        
+        ArrayList<String> expResult = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
+        String input="Le temps aujourd'hui est si beau et triste";
+        String language="2";
+        
+        TextManager instance = new TextManager(input,language);       
+        instance.sortText();
         instance.removeStopWords();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        expResult.add("le");
+        expResult.add("temps");
+        expResult.add("aujourdhui");
+        expResult.add("si");
+        expResult.add("beau");
+        expResult.add("et");
+        expResult.add("triste");
+        
+        result = instance.getCompletedWordList();
+        assertEquals(expResult,result);   
     }
 
     /**
-     * Test of getCompletedWordList method, of class TextManager.
+     * Test of sortText method, of class TextManager.
      */
     @Test
-    public void testGetCompletedWordList() {
-        System.out.println("getCompletedWordList");
-        TextManager instance = null;
-        ArrayList<String> expResult = null;
-        ArrayList<String> result = instance.getCompletedWordList();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testSortText_Numbers() throws IOException {
+        ArrayList<String> expResult = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
+        String input="The w1e3ather t6o56da7y";
+        String language="1";
+        
+        TextManager instance = new TextManager(input,language);       
+        instance.sortText();
+        expResult.add("the");
+        expResult.add("weather");
+        expResult.add("today");
+        
+        result = instance.getSortedWordList();
+        assertEquals(expResult,result);
+    }
+
+    /**
+     * Test of sortText method, of class TextManager.
+     */
+    @Test
+    public void testSortText_Characters() throws IOException {
+        ArrayList<String> expResult = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
+        String input="T*&(7h))e &&w$e^%^at__{{he><?r ~~~~~to{}{}{>><<da*&*(y";
+        String language="1";
+        
+        TextManager instance = new TextManager(input,language);       
+        instance.sortText();
+        expResult.add("the");
+        expResult.add("weather");
+        expResult.add("today");
+        
+        result = instance.getSortedWordList();
+        assertEquals(expResult,result);
+    }
+
+    /**
+     * Test of sortText method, of class TextManager.
+     */
+    @Test
+    public void testSortText_Spaces() throws IOException {
+        ArrayList<String> expResult = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
+        String input="The   weather    today";
+        String language="1";
+        
+        TextManager instance = new TextManager(input,language);       
+        instance.sortText();
+        expResult.add("the");
+        expResult.add("weather");
+        expResult.add("today");
+        
+        result = instance.getSortedWordList();
+        assertEquals(expResult,result);
     }
     
 }

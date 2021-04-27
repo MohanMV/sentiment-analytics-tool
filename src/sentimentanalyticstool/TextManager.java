@@ -62,6 +62,10 @@ public class TextManager {
         return wordListWithoutStopWords;
     }
     
+    public ArrayList<String> getSortedWordList(){
+        return wordListWithStopWords;
+    }
+    
     /**
      * Getter method for accessing text.
      * @return String of input text

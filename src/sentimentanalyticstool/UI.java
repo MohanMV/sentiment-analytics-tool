@@ -53,7 +53,7 @@ public class UI {
                 System.out.println(Language.getEnterTextMessage());
                 String text = reader.readLine();
                 classifier = new SentimentClassifier(text, language);
-                String pol = classifier.analyzeText(language);
+                String pol = classifier.analyzeText();
                 System.out.println("\n"+Language.getPolarityMessage(pol));
                 
             }
