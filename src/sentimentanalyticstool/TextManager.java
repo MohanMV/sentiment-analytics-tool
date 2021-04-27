@@ -27,8 +27,8 @@ public class TextManager {
     private String text; //Holds user input 
     private String[] wordList; // An array that holds the words from user input which contains stopwords.
     private String language;
-    private ArrayList<String> wordListWithStopWords= new ArrayList<>(); // An array that holds words from the user input after removing punctuation marks and digits. 
-    private List<String> stopWords = new ArrayList<>(); //A list that holds stop-words.
+    private ArrayList<String> wordListSorted= new ArrayList<>(); // An array that holds words from the user input after removing punctuation marks and digits. 
+    private ArrayList<String> stopWordList = new ArrayList<>();//A list that holds stop-words.
     private ArrayList<String> wordListWithoutStopWords = new ArrayList<>(); // An arraylist that holds the words from user input after removing stopwords 
             
     /**
@@ -48,10 +48,7 @@ public class TextManager {
         }
         else if(this.language.equals("2")){
             loadFrStopWords();
-        }
-        
-        
-        
+        }          
     }
     
     /**
@@ -63,7 +60,7 @@ public class TextManager {
     }
     
     public ArrayList<String> getSortedWordList(){
-        return wordListWithStopWords;
+        return wordListSorted;
     }
     
     /**
@@ -79,7 +76,7 @@ public class TextManager {
      * @return String of input text
      */
     public List<String> getStopWordList(){
-        return stopWords;
+        return stopWordList;
     }
   
     /**
@@ -102,11 +99,10 @@ public class TextManager {
 
         for(String word: wordList){
             if(!word.isEmpty()){
-                wordListWithStopWords.add(word);
+                wordListSorted.add(word);
             }
         }
         
-        wordListWithoutStopWords = new ArrayList<>(wordListWithStopWords);
         
         //loop through each element in arraylist
         //if element is not empty
@@ -114,7 +110,7 @@ public class TextManager {
         //concurrent modification
         //replace original list with the current list
                 
-        if(wordListWithStopWords == null | wordListWithStopWords.isEmpty()){
+        if(wordListSorted == null || wordListSorted.isEmpty()){
             throw new IllegalArgumentException("No proper text to analyse");// how can i change this if i need to throw an error message in another language?
         }
         
@@ -126,13 +122,19 @@ public class TextManager {
      */
     public void removeStopWords(){
         
-        for(String word : wordListWithStopWords){
-            for(String sWord : stopWords){
+        ArrayList<String> stopWords = new ArrayList<>(); 
+        for(String word : wordListSorted){
+            for(String sWord : stopWordList){
                 if(word.equals(sWord)){
-                    wordListWithoutStopWords.remove(sWord);
+                    stopWords.add(sWord);
                 }
             }
         }
+ 
+        wordListSorted.removeAll(stopWords);
+        wordListWithoutStopWords = new ArrayList<>(wordListSorted);
+        
+        
         if( wordListWithoutStopWords == null || wordListWithoutStopWords.isEmpty()){
             throw new IllegalArgumentException("Text provided only had stop words.");
         }
@@ -147,7 +149,7 @@ public class TextManager {
         String sWord;
         while ((sWord = reader.readLine()) != null) 
         {
-            stopWords.add(sWord);
+            stopWordList.add(sWord);
         }
         reader.close();
     }
@@ -158,7 +160,7 @@ public class TextManager {
         String sWord;
         while ((sWord = reader.readLine()) != null) 
         {
-            stopWords.add(sWord);
+            stopWordList.add(sWord);
         }
         reader.close();
     }
