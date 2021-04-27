@@ -84,6 +84,22 @@ public class LanguageManager {
         return println(strings.getString("mohan_accuracy"),accuracy);
     }
     
+    public String getAfinnNegativeMovieReviewMessage(float noOfReviews){
+        return println(strings.getString("afinn_negative_reviews"),noOfReviews);
+    }
+    
+    public String getAfinnPositiveMovieReviewMessage(float noOfReviews){
+        return println(strings.getString("afinn_positive_reviews"),noOfReviews);
+    }
+    
+    public String getMohanNegativeMovieReviewMessage(float noOfReviews){
+        return println(strings.getString("mohan_negative_reviews"),noOfReviews);
+    }
+
+    public String getMohanPositiveMovieReviewMessage(float noOfReviews){
+        return println(strings.getString("mohan_positive_reviews"),noOfReviews);
+    }
+    
     public String getThankYouMessage(){
         return strings.getString("thank_you");
     }

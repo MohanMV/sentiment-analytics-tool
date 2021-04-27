@@ -25,6 +25,11 @@ public class UI {
     float accuracyStats[] = new float[2];
     float afinnAccuracy;
     float mohanAccuracy;
+    float noOfNegativeReviewsAfinn;
+    float noOfPositiveReviewsAfinn;
+    float noOfNegativeReviewsMohan;
+    float noOfPositiveReviewsMohan;
+
     
     /**
      * @
@@ -77,11 +82,21 @@ public class UI {
                 accuracyStats = libraries.getAccuracyStats();
                 afinnAccuracy = accuracyStats[0];
                 mohanAccuracy = accuracyStats[1];
+                noOfNegativeReviewsAfinn = libraries.getNoOfNegativeReviewsAfinn();
+                noOfPositiveReviewsAfinn = libraries.getNoOfPositiveReviewsAfinn();
+                noOfNegativeReviewsMohan = libraries.getNoOfNegativeReviewsMohan();
+                noOfPositiveReviewsMohan = libraries.getNoOfPositiveReviewsMohan();
+                
                 System.out.println("\n"+Language.getTestSizeMessage(libraries.getTestSize()));
+                System.out.println(Language.getAfinnNegativeMovieReviewMessage(noOfNegativeReviewsAfinn));
+                System.out.println(Language.getAfinnPositiveMovieReviewMessage(noOfPositiveReviewsAfinn));
                 System.out.println(Language.getAfinnAccuracyMessage(afinnAccuracy));
+                
+                System.out.println("\n"+Language.getTestSizeMessage(libraries.getTestSize()));
+                System.out.println(Language.getMohanNegativeMovieReviewMessage(noOfNegativeReviewsMohan));
+                System.out.println(Language.getMohanPositiveMovieReviewMessage(noOfPositiveReviewsMohan));
                 System.out.println(Language.getMohanAccuracyMessage(mohanAccuracy));
-                
-                
+                    
             }
         }
 

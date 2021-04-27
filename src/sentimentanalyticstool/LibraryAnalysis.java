@@ -26,6 +26,10 @@ public class LibraryAnalysis {
     private LinkedHashMap<String,Integer> afinnEnglishLibrary = new LinkedHashMap<String, Integer>();
     private LinkedHashMap<String,Integer> afinnFrenchLibrary = new LinkedHashMap<String, Integer>();
     private List<String> stopWordList = new ArrayList<>(); //A list that holds stop-words.
+    float afinnNegative;
+    float afinnPositive;
+    float mohanNegative;
+    float mohanPositive;
     private final int testSetSize = 6;
     
     public LibraryAnalysis(String language) throws IOException{
@@ -52,10 +56,7 @@ public class LibraryAnalysis {
                 
         int negativeScores[] = new int[2];
         int positiveScores[] = new int[2];
-        float afinnNegative;
-        float afinnPositive;
-        float mohanNegative;
-        float mohanPositive;
+
         float total[] = new float[2];
         
         negativeScores = getTotalScore_Negative();
@@ -72,6 +73,21 @@ public class LibraryAnalysis {
         return total;
     }
     
+    public float getNoOfNegativeReviewsAfinn(){
+        return afinnNegative;
+    }
+    
+    public float getNoOfPositiveReviewsAfinn(){
+        return afinnPositive;
+    }
+    
+    public float getNoOfNegativeReviewsMohan(){
+        return mohanNegative;
+    }
+    
+    public float getNoOfPositiveReviewsMohan(){
+        return mohanPositive;
+    }    
     
     public String getAfinnFrenchLibrary(){
         String output = "";
@@ -159,7 +175,7 @@ public class LibraryAnalysis {
         reader.close();
     }
     
-    public int[] getTotalScore_Negative() throws FileNotFoundException, IOException {
+    private int[] getTotalScore_Negative() throws FileNotFoundException, IOException {
     
         String target_dir = "src/testing_data/neg";
         File dir = new File(target_dir);
@@ -237,7 +253,7 @@ public class LibraryAnalysis {
         return totalScoreNegative;
     }
     
-    public int[] getTotalScore_Positive() throws FileNotFoundException, IOException {
+    private int[] getTotalScore_Positive() throws FileNotFoundException, IOException {
     
         String target_dir = "src/testing_data/pos";
         File dir = new File(target_dir);
