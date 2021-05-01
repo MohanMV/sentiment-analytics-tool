@@ -39,7 +39,7 @@ public class SentimentClassifierTest {
     }
 
     /**
-     * Test of analyzeText method, of class SentimentClassifier.
+     * Test of analyseText method, of class SentimentClassifier.
      */
     @Test
     public void testPositiveEnglishInputScore_pos1() throws IOException {
@@ -50,7 +50,7 @@ public class SentimentClassifierTest {
         String language = "1";
         SentimentClassifier instance = new SentimentClassifier(text,language);
         String expResult = "POSITIVE";
-        String result = instance.analyzeText();
+        String result = instance.analyseText();
         assertEquals(expResult, result);
     }
  
@@ -63,7 +63,7 @@ public class SentimentClassifierTest {
         String language = "1";
         SentimentClassifier instance = new SentimentClassifier(text,language);
         String expResult = "POSITIVE";
-        String result = instance.analyzeText();
+        String result = instance.analyseText();
         assertEquals(expResult, result);        
     }
     
@@ -75,7 +75,7 @@ public class SentimentClassifierTest {
         String language = "1";
         SentimentClassifier instance = new SentimentClassifier(text,language);
         String expResult = "POSITIVE";
-        String result = instance.analyzeText();
+        String result = instance.analyseText();
         assertEquals(expResult, result);        
     }
     
@@ -87,7 +87,7 @@ public class SentimentClassifierTest {
         String language = "1";
         SentimentClassifier instance = new SentimentClassifier(text,language);
         String expResult = "POSITIVE";
-        String result = instance.analyzeText();
+        String result = instance.analyseText();
         assertEquals(expResult, result);        
     }
     
@@ -99,7 +99,7 @@ public class SentimentClassifierTest {
         String language = "1";
         SentimentClassifier instance = new SentimentClassifier(text,language);
         String expResult = "POSITIVE";
-        String result = instance.analyzeText();
+        String result = instance.analyseText();
         assertEquals(expResult, result);        
     }
     
@@ -111,7 +111,7 @@ public class SentimentClassifierTest {
         String language = "1";
         SentimentClassifier instance = new SentimentClassifier(text,language);
         String expResult = "NEGATIVE";
-        String result = instance.analyzeText();
+        String result = instance.analyseText();
         assertEquals(expResult, result);
     }
     
@@ -123,7 +123,7 @@ public class SentimentClassifierTest {
         String language = "1";
         SentimentClassifier instance = new SentimentClassifier(text,language);
         String expResult = "NEGATIVE";
-        String result = instance.analyzeText();
+        String result = instance.analyseText();
         assertEquals(expResult, result);
     }
 
@@ -135,7 +135,7 @@ public class SentimentClassifierTest {
         String language = "1";
         SentimentClassifier instance = new SentimentClassifier(text,language);
         String expResult = "NEGATIVE";
-        String result = instance.analyzeText();
+        String result = instance.analyseText();
         assertEquals(expResult, result);
     }
 
@@ -147,7 +147,7 @@ public class SentimentClassifierTest {
         String language = "1";
         SentimentClassifier instance = new SentimentClassifier(text,language);
         String expResult = "NEGATIVE";
-        String result = instance.analyzeText();
+        String result = instance.analyseText();
         assertEquals(expResult, result);
     }
 
@@ -159,7 +159,7 @@ public class SentimentClassifierTest {
         String language = "1";
         SentimentClassifier instance = new SentimentClassifier(text,language);
         String expResult = "NEGATIVE";
-        String result = instance.analyzeText();
+        String result = instance.analyseText();
         assertEquals(expResult, result);
     }   
     
@@ -171,7 +171,7 @@ public class SentimentClassifierTest {
         String language = "2";
         SentimentClassifier instance = new SentimentClassifier(text,language);
         String expResult = "POSITIVE";
-        String result = instance.analyzeText();
+        String result = instance.analyseText();
         assertEquals(expResult, result);        
     }
     
@@ -183,7 +183,7 @@ public class SentimentClassifierTest {
         String language = "2";
         SentimentClassifier instance = new SentimentClassifier(text,language);
         String expResult = "NEGATIVE";
-        String result = instance.analyzeText();
+        String result = instance.analyseText();
         assertEquals(expResult, result);
     }
     

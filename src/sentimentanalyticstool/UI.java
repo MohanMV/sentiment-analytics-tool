@@ -11,34 +11,28 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 
 /**
- *
+ * This class is the User Interface. 
+ * It handles all interactions with the user
+ * 
  * @author Mohankumaar MV student-id = 17048038;
  */
 public class UI {
     
     private static Scanner myIn = new Scanner(System.in);
     private LanguageManager Language;
-    SentimentClassifier classifier = null;
-    LibraryAnalysis libraries = null;
-    BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in));
-    int choice;
-    float accuracyStats[] = new float[2];
-    float afinnAccuracy;
-    float mohanAccuracy;
-    float noOfNegativeReviewsAfinn;
-    float noOfPositiveReviewsAfinn;
-    float noOfNegativeReviewsMohan;
-    float noOfPositiveReviewsMohan;
+    private SentimentClassifier classifier = null;
+    private LibraryAnalysis libraries = null;
+    private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in));
+    private int choice;
+    
 
     
-    /**
-     * @
-     * @throws java.io.IOException
+    /**This method is used run the UI in the Runner class
+     * 
+     * @throws java.io.IOException - If user input is corrupted
      */
     public void runUI() throws IOException {
-        
-
-       
+              
        try{
            
         System.out.println("Choose English or French / Choisissez l'anglais ou le français: ");
@@ -58,7 +52,7 @@ public class UI {
                 System.out.println(Language.getEnterTextMessage());
                 String text = reader.readLine();
                 classifier = new SentimentClassifier(text, language);
-                String pol = classifier.analyzeText();
+                String pol = classifier.analyseText();
                 System.out.println("\n"+Language.getPolarityMessage(pol));
                 
             }
@@ -78,6 +72,14 @@ public class UI {
                 System.out.println(libraries.getMohanLibrary());
             }
             else if(choice == 4){
+                float accuracyStats[] = new float[2];
+                float afinnAccuracy;
+                float mohanAccuracy;
+                float noOfNegativeReviewsAfinn;
+                float noOfPositiveReviewsAfinn;
+                float noOfNegativeReviewsMohan;
+                float noOfPositiveReviewsMohan;
+                
                 libraries = new LibraryAnalysis("4");
                 accuracyStats = libraries.getAccuracyStats();
                 afinnAccuracy = accuracyStats[0];
@@ -95,8 +97,7 @@ public class UI {
                 System.out.println("\n"+Language.getTestSizeMessage(libraries.getTestSize()));
                 System.out.println(Language.getMohanNegativeMovieReviewMessage(noOfNegativeReviewsMohan));
                 System.out.println(Language.getMohanPositiveMovieReviewMessage(noOfPositiveReviewsMohan));
-                System.out.println(Language.getMohanAccuracyMessage(mohanAccuracy));
-                    
+                System.out.println(Language.getMohanAccuracyMessage(mohanAccuracy));                    
             }
         }
 
@@ -106,6 +107,11 @@ public class UI {
        
     }
     
+    /**
+     * A getter method for the options seen by the user. 
+     * Called in runUI method
+     * 
+     */
     private int getOptions()throws IOException
     {   
         int choice = 100;  

@@ -5,23 +5,20 @@
  */
 package sentimentanalyticstool;
 
-import java.io.Serializable;
-
-/**
+/**The Polarity of Sentiment used for classification
  *
  * @author Mohankumaar MV student-id = 17048038;
  */
-public enum Polarity implements Serializable {
+public enum Polarity {
 
     /**
-     *
+     * Positive sentiment
      */
     POSITIVE,
 
     /**
-     *
+     * Negative Sentiment
      */
-    NEGATIVE;
-    
+    NEGATIVE;    
 }
     

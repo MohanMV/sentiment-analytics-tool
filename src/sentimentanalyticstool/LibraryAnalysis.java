@@ -15,8 +15,9 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-/**
- *
+/** 
+ * Carries out the analysis of the produced library in comparison to the Afinn English Library 
+ * 
  * @author mm18adt
  */
 public class LibraryAnalysis {
@@ -25,40 +26,48 @@ public class LibraryAnalysis {
     private LinkedHashMap<String,Integer> mohanLibrary = new LinkedHashMap<>();
     private LinkedHashMap<String,Integer> afinnEnglishLibrary = new LinkedHashMap<String, Integer>();
     private LinkedHashMap<String,Integer> afinnFrenchLibrary = new LinkedHashMap<String, Integer>();
-    private List<String> stopWordList = new ArrayList<>(); //A list that holds stop-words.
-    float afinnNegative;
-    float afinnPositive;
-    float mohanNegative;
-    float mohanPositive;
-    private final int testSetSize = 6;
+    private ArrayList<String> stopWordList = new ArrayList<>(); //A list that holds stop-words.
+    private float afinnNegative;
+    private float afinnPositive;
+    private float mohanNegative;
+    private float mohanPositive;
+    private final int testSetSize = 25000;
     
-    public LibraryAnalysis(String language) throws IOException{
+    /**
+     * Loads the relevant libraries depending on the option the user has chosen.
+     * @param option - user chosen option
+     * @throws IOException
+     */
+    public LibraryAnalysis(String option) throws IOException{
         
-        if(language.equals("1")){
+        if(option.equals("1")){
             loadEnAfinnLibrary();
         } 
-        else if(language.equals("2"))
+        else if(option.equals("2"))
         {
             loadFrAfinnLibrary();  
         }
-        else if(language.equals("3")){
+        else if(option.equals("3")){
             mohanLibrary = myLibrary.getLibrary();
         }
-        else if(language.equals("4")){
+        else if(option.equals("4")){
             loadEnAfinnLibrary();
             mohanLibrary = myLibrary.getLibrary();
             loadStopWords();
         }
-        
     }
         
+    /** 
+     * Calculates the percentage of correctly classified reviews for both libraries
+     * @return the percentage of correctly classified reviews 
+     * @throws IOException
+     */
     public float[] getAccuracyStats() throws IOException{
                 
         int negativeScores[] = new int[2];
         int positiveScores[] = new int[2];
-
         float total[] = new float[2];
-        
+   
         negativeScores = getTotalScore_Negative();
         positiveScores = getTotalScore_Positive();
      
@@ -73,22 +82,42 @@ public class LibraryAnalysis {
         return total;
     }
     
+    /** Retrieves the number of negative reviews Afinn English Library correctly classifies
+     *
+     * @return number of negative reviews Afinn English library correctly classifies
+     */
     public float getNoOfNegativeReviewsAfinn(){
         return afinnNegative;
     }
     
+    /**
+     * Retrieves the number of Positive reviews Afinn English Library correctly classifies
+     * @return number of positive reviews Afinn English library correctly classifies
+     */
     public float getNoOfPositiveReviewsAfinn(){
         return afinnPositive;
     }
     
+    /**
+     * Retrieves the number of negative reviews Mohan's Library correctly classifies
+     * @return number of negative reviews Mohan's library correctly classifies
+     */
     public float getNoOfNegativeReviewsMohan(){
         return mohanNegative;
     }
     
+    /**
+     * Retrieves the number of positive reviews Mohan's Library correctly classifies
+     * @return number of positive reviews Mohan's library correctly classifies
+     */
     public float getNoOfPositiveReviewsMohan(){
         return mohanPositive;
     }    
     
+    /**
+     * Retrieves the Afinn French Library
+     * @return the words and sentiment values from the Afinn French Library
+     */
     public String getAfinnFrenchLibrary(){
         String output = "";
         for (String key : afinnFrenchLibrary.keySet())
@@ -100,6 +129,10 @@ public class LibraryAnalysis {
         return output;        
     }
     
+    /**
+     * Retrieves the Afinn English Library
+     * @return the words and sentiment values from the Afinn French Library
+     */
     public String getAfinnEnglishLibrary(){
         String output = "";
         for (String key : afinnEnglishLibrary.keySet())
@@ -111,6 +144,10 @@ public class LibraryAnalysis {
         return output;        
     }
     
+    /**
+     * Retrieves Mohan's Library
+     * @return the words and sentiment values from Mohan's Library
+     */
     public String getMohanLibrary(){
         
         String output = "";
@@ -123,6 +160,10 @@ public class LibraryAnalysis {
         return output;
     }
     
+    /**
+     * Retrieves the testing dataset size
+     * @return number of reviews in the dataset
+     */
     public int getTestSize(){
         return testSetSize;
     }
@@ -145,6 +186,9 @@ public class LibraryAnalysis {
         reader.close();
     }
     
+     /**
+     * Read the Afinn French Library text file into a HashMap.
+     */
     private void loadFrAfinnLibrary() throws FileNotFoundException, IOException{
         
         BufferedReader reader = new BufferedReader(new FileReader("src/language_libraries/AFINN-fr-165.txt"));
@@ -164,6 +208,9 @@ public class LibraryAnalysis {
         reader.close();
     }
     
+    /**
+     * Read the Afinn English Library  text file into a HashMap.
+     */
     private void loadStopWords() throws FileNotFoundException, IOException{
 
         BufferedReader reader = new BufferedReader(new FileReader("src/stopwords/English.txt"));
@@ -175,6 +222,9 @@ public class LibraryAnalysis {
         reader.close();
     }
     
+     /**
+     * Method to calculate the total number of correctly classified negative reviews for both libraries
+     */
     private int[] getTotalScore_Negative() throws FileNotFoundException, IOException {
     
         String target_dir = "src/testing_data/neg";
@@ -189,30 +239,24 @@ public class LibraryAnalysis {
         for (File f : files) {
             if(f.isFile()) {
                 BufferedReader inputStream = null;
-
                 try {
                     inputStream = new BufferedReader(new FileReader(f));
                     String line;
-
-                    while ((line = inputStream.readLine()) != null) {
-                        
+                    while ((line = inputStream.readLine()) != null) {                        
                         int reviewScore = 0;
-
                         String result = line.replaceAll("[\\d+|\\p{P}\\p{S}]" ,"");
                         negWordList = result.toLowerCase().split(" ");
-
                         ArrayList<String> wordList = new ArrayList<>(Arrays.asList(negWordList)); 
-
                         for(String word : wordList){
                             for(String sWord : stopWordList){
                                 if(word.equals(sWord)){
                                     stopWords.add(sWord);
                                 }
                             }
-                        }
+                        }                       
+                        wordList.removeAll(stopWords);     
                         
-                        wordList.removeAll(stopWords);
-                       
+                        
                         for(String word: wordList){
                             for (String key : afinnEnglishLibrary.keySet())
                             {
@@ -221,7 +265,6 @@ public class LibraryAnalysis {
                                 }
                             }
                         }
-
                         if(reviewScore<0){
                             totalReviewScoreAfinn++;
                         }
@@ -235,7 +278,6 @@ public class LibraryAnalysis {
                                 }
                             }
                         }
-
                         if(reviewScore<0){
                             totalReviewScoreMohan++;
                         }
@@ -253,6 +295,9 @@ public class LibraryAnalysis {
         return totalScoreNegative;
     }
     
+     /**
+     * Method to calculate the total number of correctly classified positive reviews for both libraries
+     */
     private int[] getTotalScore_Positive() throws FileNotFoundException, IOException {
     
         String target_dir = "src/testing_data/pos";

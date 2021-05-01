@@ -6,23 +6,21 @@
 package sentimentanalyticstool;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-/**
+/** Runner class for UI
  *
  * @author Mohankumaar MV student-id = 17048038;
  */
 public class Runner {
     
-    public static void main(String[] args)
+    /** Run UI
+     *
+     * @param args *
+     */
+    public static void main(String[] args) throws IOException
     {
         UI xxx = new UI();
-        try {
-            xxx.runUI();
-        } catch (IOException ex) {
-            Logger.getLogger(Runner.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        xxx.runUI();
     }
     
     

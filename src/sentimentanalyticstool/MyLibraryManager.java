@@ -13,31 +13,43 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-/**
+/**Creates my library of words with their sentiment values
  *
  * @author Mohankumaar MV student-id = 17048038;
  */
 public class MyLibraryManager {
     
-    private MyLibrary Lib;
-    private List<String> stopWordList = new ArrayList<>(); //A list that holds stop-words.
-    private List<String> afinnLibrary = new ArrayList<>();
-    private LinkedHashMap<String,Integer> myLibrary = new LinkedHashMap<>();
-    private ArrayList<String> posKeyWords = new ArrayList<>();
-    private ArrayList<String> negKeyWords = new ArrayList<>();
-    private float posOccurrences; 
-    private float negOccurrences;
+    private TrainingData trainData; // An instance of the Training Data. Holds the dataset
+    private ArrayList<String> stopWordList = new ArrayList<>(); //A list that holds stop-words.
+    private ArrayList<String> afinnLibrary = new ArrayList<>(); // A ArrayLists that holds the words from the Afinn English Library
+    private LinkedHashMap<String,Integer> myLibrary = new LinkedHashMap<>(); // A HashMap that holds words and sentiment values of my library
+    private ArrayList<String> posKeyWords = new ArrayList<>(); //
+    private ArrayList<String> negKeyWords = new ArrayList<>(); //
+    private float posOccurrences; //
+    private float negOccurrences; //
     
+    /**
+     * Initialises the Dataset 
+     * stores the words from the positive reviews in the posKeyWords
+     * stores the words from the negative reviews in the negKeyWords
+     * 
+     * @throws IOException
+     */
     public MyLibraryManager() throws IOException{
         
-        Lib = new MyLibrary();
-        posKeyWords = removeStopWords(Lib.getPosWordlist());
-        negKeyWords = removeStopWords(Lib.getNegWordlist());
+        trainData = new TrainingData();
+        posKeyWords = removeStopWords(trainData.getPosWordlist());
+        negKeyWords = removeStopWords(trainData.getNegWordlist());
         
         loadStopWords();
         loadEnAfinnLibrary();
     }
     
+    /**Creates a library from a training dataset
+     *
+     * @return a library with words and their sentiment values
+     * @throws IOException
+     */
     public LinkedHashMap<String,Integer> getLibrary() throws IOException{
         
         int polarityInt;
@@ -74,7 +86,10 @@ public class MyLibraryManager {
         return myLibrary;
     }
     
-    private ArrayList removeStopWords(ArrayList<String> wordListWithSWords){
+    /**
+     * Removes stop words
+    */
+    private ArrayList<String> removeStopWords(ArrayList<String> wordListWithSWords){
         
         ArrayList<String> stopWords = new ArrayList<>();
         ArrayList<String> wordList = wordListWithSWords;         
@@ -96,6 +111,9 @@ public class MyLibraryManager {
         return wordList;
     }
 
+    /**
+     * Reads the English Stopwords text file into a HashMap.
+    */
     private void loadStopWords() throws FileNotFoundException, IOException{
 
         BufferedReader reader = new BufferedReader(new FileReader("src/stopwords/English.txt"));
@@ -108,7 +126,7 @@ public class MyLibraryManager {
     }
     
     /**
-     * Read the Afinn English text file into a HashMap.
+     * Reads the Afinn English text file into a HashMap.
     */
     private void loadEnAfinnLibrary() throws FileNotFoundException, IOException{
         

@@ -15,7 +15,7 @@ import java.util.LinkedHashMap;
 /**
  * This class is used to Classify the user input.
  * It sorts the user input using methods from the TextManager class.
- Analyses the text based on the Afinn Library
+ *  Analyses the text based on the Afinn Library
  * 
  * @author Mohankumaar MV student-id = 17048038;
  */
@@ -23,40 +23,35 @@ public class SentimentClassifier {
     
     private LinkedHashMap<String,Integer> afinnLibrary = new LinkedHashMap<String, Integer>(); // a Hash Map used to hold words and its associated score
     private TextManager input; // TextManager object used to hold the user input
-    private String language;
+    private String language; // language user has chosen
     private Polarity state; // the Polarity/state of the input
     private ArrayList<String> wordList = new ArrayList<>();
     
     /**
-     * The constructor 
+     * Loads either English or French version of the Afinn Library based on the language the user has chosen 
      * @param input User input text
-     * @param language
+     * @param language User chosen language
      * @throws FileNotFoundException if AfinnLibrary text file not found
      * @throws IOException if user input is corrupted
      */
     public SentimentClassifier(String input, String language) throws FileNotFoundException, IOException {
         
-        this.input = new TextManager(input, language);
+        this.input = new TextManager(input, language); // Initializes textManager object with user input
+         //Reads the Afinn Libarary text file into a HashMap based on user chosen language
         if(language.equals("1")){
             
             loadEnAfinnLibrary();
         } else if(language.equals("2")){
 
-            loadFrfinnLibrary(); 
-        }
-       
-        
-         // Initializes textManager object with user input
-         //Reads the Afinn Libarary text file into a HashMap
+            loadFrAfinnLibrary(); 
+        }    
     }
-    
-    
+       
     /**
-     * Analyses the input text and provides the polarity to the user
-     * @param language The language that the text is in 
+     * Analyses the input text and provides the polarity to the user 
      * @return the polarity of the text given 
      */
-    public String analyzeText(){
+    public String analyseText(){
        
         input.sortText();
         input.removeStopWords();
@@ -86,7 +81,7 @@ public class SentimentClassifier {
     }  
     
     /**
-     * Read the Afinn Library English text file into a HashMap.
+     * Read the Afinn English Library  text file into a HashMap.
      */
     private void loadEnAfinnLibrary() throws FileNotFoundException, IOException{
         
@@ -106,7 +101,10 @@ public class SentimentClassifier {
         reader.close();
     }
     
-    private void loadFrfinnLibrary() throws FileNotFoundException, IOException{
+    /**
+     * Read the Afinn French Library text file into a HashMap.
+     */
+    private void loadFrAfinnLibrary() throws FileNotFoundException, IOException{
         
         BufferedReader reader = new BufferedReader(new FileReader("src/language_libraries/AFINN-fr-165.txt"));
         String line;
@@ -117,7 +115,7 @@ public class SentimentClassifier {
             
             if(parts.length == 2){
                
-                String key = parts[0].replaceAll("[\\s+|\\p{P}\\p{S}]" ,""); // part 1 is the words. replace any symbols or punctuation marks ""
+                String key = parts[0].replaceAll("[\\s+|\\p{P}+|\\p{S}+]" ,""); // part 1 is the words. replace any symbols or punctuation marks ""
                 int value = Integer.parseInt(parts[1]); // part 2 is the word score
                 afinnLibrary.put(key,value);//store in hashmap
             }
@@ -125,55 +123,53 @@ public class SentimentClassifier {
         reader.close();
     }
     
-    /**
-     *
-     */
-    public void printStopWords(){
-
-
-        for (String word: input.getStopWordList())
-        {
-            System.out.println(word);
-        }   
-    }
-    
-    
-    
-    /**
-     *
-     */
-    public void printWordList(){
-
-
-        for (String word: input.getCompletedWordList())
-        {
-            System.out.println(word);
-        }
-        
-    }
-    
-    public void printLibrary(){
-        for (String key : afinnLibrary.keySet())
-        {
-            String k = key;
-            System.out.println(key+"\n");
-        }
-    }
-    
-
-        
-    /**
-     *
-     */
-    public void printFullLibrary(){
-
-        for (String key : afinnLibrary.keySet())
-        {
-            String k = key;
-            String value = afinnLibrary.get(key).toString();
-            System.out.println(key+" "+value + "\n" + afinnLibrary.size() + "\n");
-
-        }
-        
-    }
+//    /**
+//     *
+//     */
+//    public void printStopWords(){
+//
+//
+//        for (String word: input.getStopWordList())
+//        {
+//            System.out.println(word);
+//        }   
+//    }
+//    
+//    
+//    
+//    /**
+//     *
+//     */
+//    public void printWordList(){
+//
+//
+//        for (String word: input.getCompletedWordList())
+//        {
+//            System.out.println(word);
+//        }
+//        
+//    }
+//    
+//    public void printLibrary(){
+//        for (String key : afinnLibrary.keySet())
+//        {
+//            System.out.println(key+"\n");
+//        }
+//    }
+//    
+//
+//        
+//    /**
+//     *
+//     */
+//    public void printFullLibrary(){
+//
+//        for (String key : afinnLibrary.keySet())
+//        {
+//            String value = afinnLibrary.get(key).toString();
+//            System.out.println(key+" "+value + "\n" + afinnLibrary.size() + "\n");
+//
+//        }
+//        
+//    }
 }

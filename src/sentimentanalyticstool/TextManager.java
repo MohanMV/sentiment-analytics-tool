@@ -26,14 +26,15 @@ public class TextManager {
     
     private String text; //Holds user input 
     private String[] wordList; // An array that holds the words from user input which contains stopwords.
-    private String language;
+    private String language; // Holds user chosen language
     private ArrayList<String> wordListSorted= new ArrayList<>(); // An array that holds words from the user input after removing punctuation marks and digits. 
     private ArrayList<String> stopWordList = new ArrayList<>();//A list that holds stop-words.
     private ArrayList<String> wordListWithoutStopWords = new ArrayList<>(); // An arraylist that holds the words from user input after removing stopwords 
             
     /**
-     * Constructor for TextManager class
+     * Loads relevant stop words based on language that is chosen by the user
      * @param input User input string
+     * @param language
      * @throws IOException if user input is null or empty
      */
     public TextManager(String input, String language) throws IOException{
@@ -52,13 +53,17 @@ public class TextManager {
     }
     
     /**
-     * Getter method for accessing the sorted word list
+     * Getter method for accessing the  completed word list
      * @return array list of words from user input without any stop words, punctuation marks, symbol, digits and white-spaces. 
      */
     public ArrayList<String> getCompletedWordList(){
         return wordListWithoutStopWords;
     }
     
+    /**
+     * Getter method for accessing the sorted word list
+     * @return array list of words from user input without punctuation marks, symbol, digits and white-spaces. 
+    */
     public ArrayList<String> getSortedWordList(){
         return wordListSorted;
     }
@@ -89,7 +94,7 @@ public class TextManager {
         //uses regex to replace all digits "d+", punctuations "P" and non-whitespace characters (Symbols) "S" with an empty string
         //split the input based on whitespaces and changes all letters to lowercase
         //throws error if arraylist is empty after sorting. 
-        String result = text.replaceAll("[\\d+|\\p{P}\\p{S}]" ,"");
+        String result = text.replaceAll("[\\d+|\\p{P}+|\\p{S}+]" ,"");
         if(this.language.equals("1")){
             wordList = result.toLowerCase().split(" ");
         }
@@ -102,13 +107,6 @@ public class TextManager {
                 wordListSorted.add(word);
             }
         }
-        
-        
-        //loop through each element in arraylist
-        //if element is not empty
-        //move it to new arraylist
-        //concurrent modification
-        //replace original list with the current list
                 
         if(wordListSorted == null || wordListSorted.isEmpty()){
             throw new IllegalArgumentException("No proper text to analyse");// how can i change this if i need to throw an error message in another language?
@@ -141,7 +139,7 @@ public class TextManager {
     }
     
     /**
-     * Read the stop-words text file into an array list.
+     * Read the english stop-words text file into an array list.
      */
     private void loadEngStopWords() throws FileNotFoundException, IOException{
         
@@ -154,6 +152,9 @@ public class TextManager {
         reader.close();
     }
     
+     /**
+     * Read the french stop-words text file into an array list.
+     */
     private void loadFrStopWords() throws FileNotFoundException, IOException{
         
         BufferedReader reader = new BufferedReader(new FileReader("src/stopwords/French.txt"));
