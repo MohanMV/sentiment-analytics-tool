@@ -13,12 +13,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 /** 
  * Carries out the analysis of the produced library in comparison to the Afinn English Library 
  * 
- * @author mm18adt
+ * @author Mohankumaar MV student-id = 17048038
  */
 public class LibraryAnalysis {
     
@@ -31,7 +30,7 @@ public class LibraryAnalysis {
     private float afinnPositive;
     private float mohanNegative;
     private float mohanPositive;
-    private final int testSetSize = 25000;
+    private final int testSetSize = 6;
     
     /**
      * Loads the relevant libraries depending on the option the user has chosen.

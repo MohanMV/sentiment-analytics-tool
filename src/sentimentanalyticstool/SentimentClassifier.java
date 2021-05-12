@@ -77,7 +77,6 @@ public class SentimentClassifier {
         }else{
             return "0";
         }
-
     }  
     
     /**
